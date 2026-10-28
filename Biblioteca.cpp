@@ -79,6 +79,8 @@ int main() {
                 break;
             default:
                 cout << "\n[ERROR] Opción no válida.\n";
+                system("pause");
+                system("cls");
         }
     } while (opcion != 10);
     return 0;
@@ -102,6 +104,7 @@ void mostrarMenu() {
 }
 
 void registrarLibro() {
+    inicioRegistrarLibro:
     cout << "\n=== REGISTRO DE NUEVO LIBRO ===\n";
     string codigo, titulo, autor, categoria;
     int anio = 0;
@@ -115,12 +118,17 @@ void registrarLibro() {
 
         if (codigo.empty()) {
             cout << "[ERROR] El código no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarLibro;
         } else {
             for (int i = 0; i < totalLibros; ++i) {
                 if (libroCodigo[i] == codigo) {
                     cout << "[ERROR] El código del libro ya está registrado (repetido).\n";
                     codigoRepetido = true;
-                    break;
+                    system("pause");
+                    system("cls");
+                    goto inicioRegistrarLibro;
                 }
             }
         }
@@ -132,6 +140,9 @@ void registrarLibro() {
 
         if (titulo.empty()) {
             cout << "[ERROR] El título no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarLibro;
         }
     } while (titulo.empty());
 
@@ -141,6 +152,9 @@ void registrarLibro() {
 
         if (autor.empty()) {
             cout << "[ERROR] El autor no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarLibro;
         }
     } while (autor.empty());
 
@@ -152,6 +166,9 @@ void registrarLibro() {
 
         if (anio <= 0 || anio > anioActual) {
             cout << "[ERROR] Ingrese un año válido (entre 1 y " << anioActual << ").\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarLibro;
         }
     } while (anio <= 0 || anio > anioActual);
 
@@ -177,7 +194,9 @@ void registrarLibro() {
             case 6: categoria = "Otra"; break;
             default: 
                 cout << "[ERROR] Debe elegir un número del 1 al 6.\n";
-                break;
+                system("pause");
+                system("cls");
+                goto inicioRegistrarLibro;
         }
     } while (opcionCat < 1 || opcionCat > 6);
 
@@ -189,6 +208,9 @@ void registrarLibro() {
 
         if (ejemplares <= 0) {
             cout << "[ERROR] La cantidad debe ser mayor a cero.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarLibro;
         }
     } while (ejemplares <= 0);
 
@@ -207,6 +229,7 @@ void registrarLibro() {
 }
 
 void registrarEstudiante() {
+    inicioRegistrarEstudiante:
     cout << "\n=== REGISTRO DE NUEVO ESTUDIANTE ===\n";
     string nombre, apellidos, carnet;
     bool carnetRepetido = false;
@@ -217,6 +240,9 @@ void registrarEstudiante() {
 
         if (nombre.empty()) {
             cout << "[ERROR] El nombre no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarEstudiante;
         }
     } while (nombre.empty());
 
@@ -226,6 +252,9 @@ void registrarEstudiante() {
 
         if (apellidos.empty()) {
             cout << "[ERROR] Los apellidos no pueden estar vacíos.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarEstudiante;
         }
     } while (apellidos.empty());
 
@@ -236,12 +265,17 @@ void registrarEstudiante() {
 
         if (carnet.empty()) {
             cout << "[ERROR] El carnet no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioRegistrarEstudiante;
         } else {
             for (int i = 0; i < totalEstudiantes; ++i) {
                 if (estudianteCarnet[i] == carnet) {
                     cout << "[ERROR] El carnet del estudiante ya está registrado (repetido).\n";
                     carnetRepetido = true;
-                    break;
+                    system("pause");
+                    system("cls");
+                    goto inicioRegistrarEstudiante;
                 }
             }
         }
@@ -305,6 +339,7 @@ void modificarLibro() {
         return;
     }
 
+    inicioModificarLibro:
     string codigoBusqueda;
     cout << "\n=== MODIFICAR LIBRO ===\n";
     cout << "Ingrese el código del libro a modificar: ";
@@ -320,6 +355,9 @@ void modificarLibro() {
 
     if (indice == -1) {
         cout << "\n[ERROR] No se encontró ningún libro con el código proporcionado.\n";
+        system("pause");
+        system("cls");
+        goto inicioModificarLibro;
     } else {
         cout << "\n--- Ingrese los nuevos datos del libro ---\n";
 
@@ -328,6 +366,9 @@ void modificarLibro() {
             getline(cin, libroTitulo[indice]);
             if (libroTitulo[indice].empty()) {
                 cout << "[ERROR] El título no puede estar vacío.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarLibro;
             }
         } while (libroTitulo[indice].empty());
 
@@ -336,6 +377,9 @@ void modificarLibro() {
             getline(cin, libroAutor[indice]);
             if (libroAutor[indice].empty()) {
                 cout << "[ERROR] El autor no puede estar vacío.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarLibro;
             }
         } while (libroAutor[indice].empty());
 
@@ -346,6 +390,9 @@ void modificarLibro() {
             cin.ignore(1000, '\n');
             if (libroAnio[indice] <= 0 || libroAnio[indice] > anioActual) {
                 cout << "[ERROR] Ingrese un año válido.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarLibro;
             }
         } while (libroAnio[indice] <= 0 || libroAnio[indice] > anioActual);
 
@@ -364,7 +411,11 @@ void modificarLibro() {
                 case 4: libroCategoria[indice] = "Historia"; break;
                 case 5: libroCategoria[indice] = "Tecnología"; break;
                 case 6: libroCategoria[indice] = "Otra"; break;
-                default: cout << "[ERROR] Opción no válida.\n"; break;
+                default: 
+                    cout << "[ERROR] Opción no válida.\n"; 
+                    system("pause");
+                    system("cls");
+                    goto inicioModificarLibro;
             }
         } while (opcionCat < 1 || opcionCat > 6);
 
@@ -375,6 +426,9 @@ void modificarLibro() {
             cin.ignore(1000, '\n');
             if (libroEjemplares[indice] <= 0) {
                 cout << "[ERROR] La cantidad debe ser mayor a cero.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarLibro;
             }
         } while (libroEjemplares[indice] <= 0);
 
@@ -393,6 +447,7 @@ void eliminarLibro() {
         return;
     }
 
+    inicioEliminarLibro:
     string codigoBusqueda;
     cout << "\n=== ELIMINAR LIBRO ===\n";
     cout << "Ingrese el código del libro a eliminar: ";
@@ -408,6 +463,9 @@ void eliminarLibro() {
 
     if (indice == -1) {
         cout << "\n[ERROR] No se encontró ningún libro con el código proporcionado.\n";
+        system("pause");
+        system("cls");
+        goto inicioEliminarLibro;
     } else {
         libroCodigo.erase(libroCodigo.begin() + indice);
         libroTitulo.erase(libroTitulo.begin() + indice);
@@ -432,6 +490,7 @@ void modificarEstudiante() {
         return;
     }
 
+    inicioModificarEstudiante:
     string carnetBusqueda;
     cout << "\n=== MODIFICAR ESTUDIANTE ===\n";
     cout << "Ingrese el carnet del estudiante a modificar: ";
@@ -447,6 +506,9 @@ void modificarEstudiante() {
 
     if (indice == -1) {
         cout << "\n[ERROR] No se encontró ningún estudiante con el carnet proporcionado.\n";
+        system("pause");
+        system("cls");
+        goto inicioModificarEstudiante;
     } else {
         cout << "\n--- Ingrese los nuevos datos del estudiante ---\n";
 
@@ -455,6 +517,9 @@ void modificarEstudiante() {
             getline(cin, estudianteNombre[indice]);
             if (estudianteNombre[indice].empty()) {
                 cout << "[ERROR] El nombre no puede estar vacío.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarEstudiante;
             }
         } while (estudianteNombre[indice].empty());
 
@@ -463,6 +528,9 @@ void modificarEstudiante() {
             getline(cin, estudianteApellidos[indice]);
             if (estudianteApellidos[indice].empty()) {
                 cout << "[ERROR] Los apellidos no pueden estar vacíos.\n";
+                system("pause");
+                system("cls");
+                goto inicioModificarEstudiante;
             }
         } while (estudianteApellidos[indice].empty());
 
@@ -481,6 +549,7 @@ void eliminarEstudiante() {
         return;
     }
 
+    inicioEliminarEstudiante:
     string carnetBusqueda;
     cout << "\n=== ELIMINAR ESTUDIANTE ===\n";
     cout << "Ingrese el carnet del estudiante a eliminar: ";
@@ -496,6 +565,9 @@ void eliminarEstudiante() {
 
     if (indice == -1) {
         cout << "\n[ERROR] No se encontró ningún estudiante con el carnet proporcionado.\n";
+        system("pause");
+        system("cls");
+        goto inicioEliminarEstudiante;
     } else {
         estudianteNombre.erase(estudianteNombre.begin() + indice);
         estudianteApellidos.erase(estudianteApellidos.begin() + indice);
@@ -517,6 +589,7 @@ void buscarPrestamo() {
         return;
     }
     
+    inicioBusquedaPrestamo:
     cout << "\n=== BÚSQUEDA DE PRÉSTAMO ===\n";
     string carnetBusqueda, codigoBusqueda;
 
@@ -526,6 +599,9 @@ void buscarPrestamo() {
 
         if (carnetBusqueda.empty()) {
             cout << "[ERROR] El carnet no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioBusquedaPrestamo;
         }
     } while (carnetBusqueda.empty());
 
@@ -535,6 +611,9 @@ void buscarPrestamo() {
 
         if (codigoBusqueda.empty()) {
             cout << "[ERROR] El código no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioBusquedaPrestamo;
         }
     } while (codigoBusqueda.empty());
 
@@ -574,6 +653,7 @@ void buscarPrestamo() {
     
     }
     
+    inicioDevolucionLibro:
     cout << "\n=== DEVOLUCIÓN DE LIBRO ===\n";
     carnetBusqueda = "";
     codigoBusqueda = "";
@@ -584,6 +664,9 @@ void buscarPrestamo() {
 
         if (carnetBusqueda.empty()) {
             cout << "[ERROR] El carnet no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioDevolucionLibro;
         }
     } while (carnetBusqueda.empty());
 
@@ -593,6 +676,9 @@ void buscarPrestamo() {
 
         if (codigoBusqueda.empty()) {
             cout << "[ERROR] El código no puede estar vacío.\n";
+            system("pause");
+            system("cls");
+            goto inicioDevolucionLibro;
         }
     } while (codigoBusqueda.empty());
 
@@ -614,6 +700,9 @@ void buscarPrestamo() {
 
     if (indiceEstudiante == -1 || indiceLibro == -1) {
         cout << "\n[ERROR] No se encontró al estudiante o al libro con los datos proporcionados.\n";
+        system("pause");
+        system("cls");
+        goto inicioDevolucionLibro;
     } else {
         // Incrementamos los ejemplares disponibles al devolver el libro
         libroEjemplares[indiceLibro]++;
