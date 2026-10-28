@@ -106,15 +106,25 @@ void registrarLibro() {
     string codigo, titulo, autor, categoria;
     int anio = 0;
     int ejemplares = 0;
+    bool codigoRepetido = false;
 
     do {
+        codigoRepetido = false;
         cout << "Ingrese el código del libro: ";
         getline(cin, codigo);
 
         if (codigo.empty()) {
             cout << "[ERROR] El código no puede estar vacío.\n";
+        } else {
+            for (int i = 0; i < totalLibros; ++i) {
+                if (libroCodigo[i] == codigo) {
+                    cout << "[ERROR] El código del libro ya está registrado (repetido).\n";
+                    codigoRepetido = true;
+                    break;
+                }
+            }
         }
-    } while (codigo.empty());
+    } while (codigo.empty() || codigoRepetido);
 
     do {
         cout << "Ingrese el título: ";
@@ -199,6 +209,7 @@ void registrarLibro() {
 void registrarEstudiante() {
     cout << "\n=== REGISTRO DE NUEVO ESTUDIANTE ===\n";
     string nombre, apellidos, carnet;
+    bool carnetRepetido = false;
 
     do {
         cout << "Ingrese los nombres del estudiante: ";
@@ -219,13 +230,22 @@ void registrarEstudiante() {
     } while (apellidos.empty());
 
     do {
+        carnetRepetido = false;
         cout << "Ingrese el carnet del estudiante: ";
         getline(cin, carnet);
 
         if (carnet.empty()) {
             cout << "[ERROR] El carnet no puede estar vacío.\n";
+        } else {
+            for (int i = 0; i < totalEstudiantes; ++i) {
+                if (estudianteCarnet[i] == carnet) {
+                    cout << "[ERROR] El carnet del estudiante ya está registrado (repetido).\n";
+                    carnetRepetido = true;
+                    break;
+                }
+            }
         }
-    } while (carnet.empty());
+    } while (carnet.empty() || carnetRepetido);
 
     estudianteNombre.push_back(nombre);
     estudianteApellidos.push_back(apellidos);
