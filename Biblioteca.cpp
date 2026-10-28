@@ -575,7 +575,8 @@ void buscarPrestamo() {
     }
     
     cout << "\n=== DEVOLUCIÓN DE LIBRO ===\n";
-    string carnetBusqueda, codigoBusqueda;
+    carnetBusqueda = "";
+    codigoBusqueda = "";
 
     do {
         cout << "Ingrese el carnet del estudiante: ";
@@ -595,7 +596,7 @@ void buscarPrestamo() {
         }
     } while (codigoBusqueda.empty());
 
-    int indiceEstudiante = -1;
+    indiceEstudiante = -1;
     for (int i = 0; i < totalEstudiantes; ++i) {
         if (estudianteCarnet[i] == carnetBusqueda) {
             indiceEstudiante = i;
@@ -603,7 +604,7 @@ void buscarPrestamo() {
         }
     }
 
-    int indiceLibro = -1;
+    indiceLibro = -1;
     for (int i = 0; i < totalLibros; ++i) {
         if (libroCodigo[i] == codigoBusqueda) {
             indiceLibro = i;
