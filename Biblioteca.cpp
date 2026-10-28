@@ -551,7 +551,56 @@ void buscarPrestamo() {
         cout << "Categoría:  " << libroCategoria[indiceLibro] << "\n";
         cout << "Ejemplares: " << libroEjemplares[indiceLibro];
         cout << "\n-----------------------------------------\n";
+    
     }
+    
+    cout << "\n=== DEVOLUCIÓN DE LIBRO ===\n";
+    string carnetBusqueda, codigoBusqueda;
+
+    do {
+        cout << "Ingrese el carnet del estudiante: ";
+        getline(cin, carnetBusqueda);
+
+        if (carnetBusqueda.empty()) {
+            cout << "[ERROR] El carnet no puede estar vacío.\n";
+        }
+    } while (carnetBusqueda.empty());
+
+    do {
+        cout << "Ingrese el código del libro a devolver: ";
+        getline(cin, codigoBusqueda);
+
+        if (codigoBusqueda.empty()) {
+            cout << "[ERROR] El código no puede estar vacío.\n";
+        }
+    } while (codigoBusqueda.empty());
+
+    int indiceEstudiante = -1;
+    for (int i = 0; i < totalEstudiantes; ++i) {
+        if (estudianteCarnet[i] == carnetBusqueda) {
+            indiceEstudiante = i;
+            break;
+        }
+    }
+
+    int indiceLibro = -1;
+    for (int i = 0; i < totalLibros; ++i) {
+        if (libroCodigo[i] == codigoBusqueda) {
+            indiceLibro = i;
+            break;
+        }
+    }
+
+    if (indiceEstudiante == -1 || indiceLibro == -1) {
+        cout << "\n[ERROR] No se encontró al estudiante o al libro con los datos proporcionados.\n";
+    } else {
+        // Incrementamos los ejemplares disponibles al devolver el libro
+        libroEjemplares[indiceLibro]++;
+        cout << "\n[INFO] ¡Libro devuelto exitosamente!\n";
+        cout << "Estudiante: " << estudianteNombre[indiceEstudiante] << " " << estudianteApellidos[indiceEstudiante] << "\n";
+        cout << "Libro:      " << libroTitulo[indiceLibro] << " (Código: " << libroCodigo[indiceLibro] << ")\n";
+        cout << "Ejemplares actuales disponibles: " << libroEjemplares[indiceLibro] << "\n";
+}
     system("pause");
     system("cls");
 }
