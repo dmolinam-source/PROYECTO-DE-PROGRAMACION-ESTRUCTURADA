@@ -32,7 +32,7 @@ void modificarLibro();
 void eliminarLibro();
 void modificarEstudiante();
 void eliminarEstudiante();
-
+void agregarStock(); 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -40,7 +40,7 @@ int main() {
     do {
         mostrarMenu();
 
-        cout << "Seleccione una opción (1-10): ";
+        cout << "Seleccione una opción (1-11): ";
         cin >> opcion;
 
         cin.clear();
@@ -75,6 +75,9 @@ int main() {
                 buscarPrestamo();
                 break;
             case 10:
+                agregarStock(); 
+                break;
+            case 11:
                 cout << "\n[INFO] Saliendo del sistema...\n";
                 break;
             default:
@@ -82,7 +85,7 @@ int main() {
                 system("pause");
                 system("cls");
         }
-    } while (opcion != 10);
+    } while (opcion != 11); 
     return 0;
 }
 
@@ -99,7 +102,8 @@ void mostrarMenu() {
     cout << "7. Modificar estudiante\n";
     cout << "8. Eliminar estudiante\n";
     cout << "9. Buscar préstamo\n";
-    cout << "10. Salir";
+    cout << "10. Agregar Stock a un Libro\n"; 
+    cout << "11. Salir";
     cout << "\n========================================\n";
 }
 
@@ -704,13 +708,72 @@ void buscarPrestamo() {
         system("cls");
         goto inicioDevolucionLibro;
     } else {
-        // Incrementamos los ejemplares disponibles al devolver el libro
+        
         libroEjemplares[indiceLibro]++;
         cout << "\n[INFO] ¡Libro devuelto exitosamente!\n";
         cout << "Estudiante: " << estudianteNombre[indiceEstudiante] << " " << estudianteApellidos[indiceEstudiante] << "\n";
         cout << "Libro:      " << libroTitulo[indiceLibro] << " (Código: " << libroCodigo[indiceLibro] << ")\n";
         cout << "Ejemplares actuales disponibles: " << libroEjemplares[indiceLibro] << "\n";
 }
+    system("pause");
+    system("cls");
+}
+void agregarStock() {
+    if (totalLibros == 0) {
+        cout << "\n[INFO] No hay libros registrados para gestionar stock.\n";
+        system("pause");
+        system("cls");
+        return;
+    }
+
+    inicioAgregarStock:
+    string codigoBusqueda;
+    cout << "\n=== AGREGAR STOCK A UN LIBRO ===\n";
+    cout << "Ingrese el código del libro: ";
+    getline(cin, codigoBusqueda);
+
+    int indice = -1;
+    
+    for (int i = 0; i < totalLibros; ++i) {
+        if (libroCodigo[i] == codigoBusqueda) {
+            indice = i;
+            break;
+        }
+    }
+
+    
+    if (indice == -1) {
+        cout << "\n[ERROR] No se encontró ningún libro con el código proporcionado.\n";
+        system("pause");
+        system("cls");
+        goto inicioAgregarStock;
+    } else {
+        int nuevosEjemplares = 0;
+        cout << "\nLibro encontrado: " << libroTitulo[indice] << "\n";
+        cout << "Stock actual: " << libroEjemplares[indice] << " ejemplares.\n";
+
+        
+        do {
+            cout << "\nIngrese la cantidad de libros nuevos a agregar al stock: ";
+            cin >> nuevosEjemplares;
+            cin.clear();
+            cin.ignore(1000, '\n');
+
+            if (nuevosEjemplares <= 0) {
+                cout << "[ERROR] La cantidad a agregar debe ser mayor a cero.\n";
+                system("pause");
+                system("cls");
+                goto inicioAgregarStock;
+            }
+        } while (nuevosEjemplares <= 0);
+
+        
+        libroEjemplares[indice] += nuevosEjemplares;
+
+        cout << "\n[INFO] ¡Stock actualizado exitosamente!\n";
+        cout << "El nuevo stock de '" << libroTitulo[indice] << "' es de " << libroEjemplares[indice] << " ejemplares.\n";
+    }
+
     system("pause");
     system("cls");
 }
